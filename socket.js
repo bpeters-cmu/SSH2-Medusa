@@ -111,7 +111,7 @@ module.exports = function socket (socket) {
       host: socket.request.session.ssh.host,
       port: config.ssh.port,
       username: config.user.name,
-      privateKey: require('fs').readFileSync(socket.request.session.ssh.host.toString()),
+      privateKey: require('fs').readFileSync('/SSH2-Medusa/medusa_keys/'+socket.request.session.ssh.host.toString()),
       tryKeyboard: true,
       hostHash: 'sha1',
       debug: debug('ssh2')
