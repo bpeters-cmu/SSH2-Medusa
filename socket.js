@@ -9,6 +9,9 @@ var fs = require('fs')
 var hostkeys = JSON.parse(fs.readFileSync('./hostkeyhashes.json', 'utf8'))
 var termCols, termRows
 var config = require('read-config')(path.join(__dirname, 'config.json'))
+var exec = require('child_process').exec;
+var sleep = require('system-sleep');
+
 
 // public
 module.exports = function socket (socket) {
@@ -104,14 +107,15 @@ module.exports = function socket (socket) {
     debugWebSSH2('conn.on(\'keyboard-interactive\')')
     finish([socket.request.session.userpassword])
   })
-  if (true) {
-    // console.log('hostkeys: ' + hostkeys[0].[0])
+  if (socket.request.session.ssh.username && socket.request.session.ssh.key) {
+    console.log('key ' + socket.request.session.ssh.key);
+    sleep(5000)
     console.log(socket.request.session.ssh.host);
     conn.connect({
       host: socket.request.session.ssh.host,
       port: config.ssh.port,
-      username: config.user.name,
-      privateKey: require('fs').readFileSync('/SSH2-Medusa/medusa_keys/'+socket.request.session.ssh.host.toString()),
+      username: socket.request.session.ssh.username,
+      privateKey: require('fs').readFileSync('/SSH2-Medusa/medusa_keys/'+socket.request.session.ssh.host.toString() + '_decrypted'),
       tryKeyboard: true,
       hostHash: 'sha1',
       debug: debug('ssh2')
@@ -155,5 +159,20 @@ module.exports = function socket (socket) {
       socket.disconnect(true)
     }
     debugWebSSH2('SSHerror ' + myFunc + theError)
+  }
+
+  function decrypt (file, key, err) {
+
+  var data = fs.readFileSync(file);
+  console.log(data.toString('base64'));
+
+  exec('python decrypt.py ' + key + ' ' + file + ' ' + data.toString('base64'), function(error, stdout, stderr) {
+      console.log('stdout: ' + stdout);
+      console.log('stderr: ' + stderr);
+      if (error !== null) {
+          console.log('exec error: ' + error);
+      }});
+
+
   }
 }
