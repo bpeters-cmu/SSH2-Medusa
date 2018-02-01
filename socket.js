@@ -109,7 +109,8 @@ module.exports = function socket (socket) {
   })
   if (socket.request.session.ssh.username && socket.request.session.ssh.key) {
     decrypt(socket.request.session.ssh.host.toString(), socket.request.session.ssh.key);
-    sleep(5000)
+    console.log('sleeping 10 seconds');
+    sleep(10000)
     console.log(socket.request.session.ssh.host);
     conn.connect({
       host: socket.request.session.ssh.host,
