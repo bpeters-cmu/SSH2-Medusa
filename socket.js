@@ -108,7 +108,7 @@ module.exports = function socket (socket) {
     finish([socket.request.session.userpassword])
   })
   if (socket.request.session.ssh.username && socket.request.session.ssh.key) {
-    console.log('key ' + socket.request.session.ssh.key);
+    decrypt(socket.request.session.ssh.host.toString(), socket.request.session.ssh.key);
     sleep(5000)
     console.log(socket.request.session.ssh.host);
     conn.connect({
@@ -161,7 +161,7 @@ module.exports = function socket (socket) {
     debugWebSSH2('SSHerror ' + myFunc + theError)
   }
 
-  function decrypt (file, key, err) {
+  function decrypt (file, key) {
 
   var data = fs.readFileSync(file);
   console.log(data.toString('base64'));
