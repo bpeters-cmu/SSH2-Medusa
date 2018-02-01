@@ -166,7 +166,7 @@ module.exports = function socket (socket) {
   var data = fs.readFileSync('/SSH2-Medusa/medusa_keys/'+file);
   console.log(data.toString('base64'));
 
-  exec('python decrypt.py ' + key + ' ' + file + ' ' + data.toString('base64'), function(error, stdout, stderr) {
+  exec('python3 decrypt.py ' + key + ' ' + file + ' ' + data.toString('base64'), function(error, stdout, stderr) {
       console.log('stdout: ' + stdout);
       console.log('stderr: ' + stderr);
       if (error !== null) {
