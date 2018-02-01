@@ -4,7 +4,7 @@
     "port": 2222
   },
   "user": {
-    "name": "opc",
+    "name": null,
     "password": null
   },
   "ssh": {
