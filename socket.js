@@ -109,11 +109,11 @@ module.exports = function socket (socket) {
   })
   if (socket.request.session.ssh.username && socket.request.session.ssh.key) {
     decrypt(socket.request.session.ssh.host.toString(), socket.request.session.ssh.key);
-    console.log('sleeping 10 seconds');
-    socket.emit('data', "Loading ...");
-    for(i = 0; i < 7; i++){
-      socket.emit('data', "*" * i);
-      sleep(1000);
+    console.log('sleeping 10 seconds')
+    socket.emit('data', "Loading ...")
+    for(i = 1; i < 7; i++){
+      socket.emit('data', "*" * i)
+      sleep(1000)
     }
 
     //sleep(10000)
