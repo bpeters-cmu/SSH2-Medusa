@@ -185,6 +185,9 @@ module.exports = function socket (socket) {
       console.log('stderr: ' + stderr);
       if (error !== null) {
           console.log('exec error: ' + error);
+          socket.emit('data', " ##### CONNECTION FAILED USERNAME/PASSWORD INCORRECT #####")
+          SSHerror('CONN ERROR', error)
+          return
       }});
 
 
