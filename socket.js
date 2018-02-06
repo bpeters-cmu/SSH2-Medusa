@@ -121,7 +121,7 @@ module.exports = function socket (socket) {
       socket.emit('data', "*")
       sleep(1200)
     }
-
+    try{
     console.log(socket.request.session.ssh.host);
     conn.connect({
       host: socket.request.session.ssh.host,
@@ -132,6 +132,11 @@ module.exports = function socket (socket) {
       hostHash: 'sha1',
       debug: debug('ssh2')
     })
+  }catch(err){
+    socket.emit('data', " ##### CONNECTION FAILED #####")
+    SSHerror('CONN ERROR', err)
+    return
+  }
   } else {
     debugWebSSH2('Attempt to connect without session.username/password or session varialbles defined, potentially previously abandoned client session. disconnecting websocket client.\r\nHandshake information: \r\n  ' + JSON.stringify(socket.handshake))
     socket.emit('ssherror', 'WEBSOCKET ERROR - Refresh the browser and try again')
@@ -185,9 +190,7 @@ module.exports = function socket (socket) {
       console.log('stderr: ' + stderr);
       if (error !== null) {
           console.log('exec error: ' + error);
-          socket.emit('data', " ##### CONNECTION FAILED USERNAME/PASSWORD INCORRECT #####")
-          SSHerror('CONN ERROR', error)
-          return
+
       }});
 
 
