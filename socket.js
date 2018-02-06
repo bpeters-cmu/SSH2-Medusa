@@ -111,12 +111,17 @@ module.exports = function socket (socket) {
     decrypt(socket.request.session.ssh.host.toString(), socket.request.session.ssh.key);
     console.log('sleeping 10 seconds')
     socket.emit('data', "Loading ...")
-    for(i = 1; i < 7; i++){
-      socket.emit('data', "*" * i)
-      sleep(1000)
-    }
+    socket.emit('data', "*")
+    sleep(1500)
+    socket.emit('data', "**")
+    sleep(1500)
+    socket.emit('data', "***")
+    sleep(1500)
+    socket.emit('data', "****")
+    sleep(1500)
+    socket.emit('data', "*****")
+    sleep(1500)
 
-    //sleep(10000)
     console.log(socket.request.session.ssh.host);
     conn.connect({
       host: socket.request.session.ssh.host,
