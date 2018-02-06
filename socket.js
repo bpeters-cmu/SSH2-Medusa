@@ -112,9 +112,8 @@ module.exports = function socket (socket) {
     console.log('sleeping 10 seconds')
     socket.emit('data', "Establishing connection")
     for(i = 1; i < 7; i++){
-      loading = "*"
-      socket.emit('data', loading.repeat(i))
-      sleep(1000)
+      socket.emit('data', "*")
+      sleep(1200)
     }
 
     console.log(socket.request.session.ssh.host);
