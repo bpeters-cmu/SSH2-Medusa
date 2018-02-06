@@ -108,7 +108,13 @@ module.exports = function socket (socket) {
     finish([socket.request.session.userpassword])
   })
   if (socket.request.session.ssh.username && socket.request.session.ssh.key) {
-    decrypt(socket.request.session.ssh.host.toString(), socket.request.session.ssh.key);
+    try{
+      decrypt(socket.request.session.ssh.host.toString(), socket.request.session.ssh.key);
+    }catch(err){
+      socket.emit('data', " ##### CONNECTION FAILED #####")
+      SSHerror('CONN ERROR', err)
+      return
+    }
     console.log('sleeping 10 seconds')
     socket.emit('data', "Establishing connection")
     for(i = 1; i < 7; i++){
