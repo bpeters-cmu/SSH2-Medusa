@@ -110,17 +110,12 @@ module.exports = function socket (socket) {
   if (socket.request.session.ssh.username && socket.request.session.ssh.key) {
     decrypt(socket.request.session.ssh.host.toString(), socket.request.session.ssh.key);
     console.log('sleeping 10 seconds')
-    socket.emit('data', "Loading ...")
-    socket.emit('data', "*")
-    sleep(1500)
-    socket.emit('data', "**")
-    sleep(1500)
-    socket.emit('data', "***")
-    sleep(1500)
-    socket.emit('data', "****")
-    sleep(1500)
-    socket.emit('data', "*****")
-    sleep(1500)
+    socket.emit('data', "Establishing connection")
+    for(i = 1; i < 7; i++){
+      loading = "*"
+      socket.emit('data', loading.repeat(i))
+      sleep(1000)
+    }
 
     console.log(socket.request.session.ssh.host);
     conn.connect({
